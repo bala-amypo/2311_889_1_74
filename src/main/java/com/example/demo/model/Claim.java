@@ -13,15 +13,16 @@ public class Claim{
     private String APPROVED;
     private String REJECTED;
 
-    public Claim(Long id, LocalDate claimDate, String description, String pENDING, String aPPROVED, String rEJECTED) {
+    public Claim(Long id, LocalDate claimDate, Double claimAmount, String description, String pENDING, String aPPROVED,
+            String rEJECTED) {
         this.id = id;
         this.claimDate = claimDate;
+        this.claimAmount = claimAmount;
         this.description = description;
         PENDING = pENDING;
         APPROVED = aPPROVED;
         REJECTED = rEJECTED;
     }
-
     public Long getId() {
         return id;
     }
@@ -34,11 +35,11 @@ public class Claim{
     public void setClaimDate(LocalDate claimDate) {
         this.claimDate = claimDate;
     }
-    public LocalDate getClaimDate() {
-        return claimDate;
+    public Double getClaimAmount() {
+        return claimAmount;
     }
-    public void setClaimDate(LocalDate claimDate) {
-        this.claimDate = claimDate;
+    public void setClaimAmount(Double claimAmount) {
+        this.claimAmount = claimAmount;
     }
     public String getDescription() {
         return description;
@@ -64,4 +65,5 @@ public class Claim{
     public void setREJECTED(String rEJECTED) {
         REJECTED = rEJECTED;
     }
+
 }
