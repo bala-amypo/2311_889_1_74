@@ -1,8 +1,9 @@
 package com.example.demo.model;
-import 
+import jakarte.persistence.Id;
 public class FraudRule{
     @Id
     private Long id;
+    @Column(unique = true)
     private String ruleName;
     private String conditionField;
     private String value;
