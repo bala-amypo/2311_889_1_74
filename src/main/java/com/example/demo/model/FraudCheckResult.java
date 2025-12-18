@@ -2,7 +2,9 @@ package com.example.demo.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Id;
 public class FraudCheckResult{
+    @Id
     private Long id;
     private Boolean isFraudulent;
     private String triggeredRuleName;
