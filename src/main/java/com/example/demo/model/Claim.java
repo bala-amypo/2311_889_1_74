@@ -6,13 +6,23 @@ public class Claim{
     @Id
     private Long id;
     private LocalDate claimDate;
-    private Double claimDate;
+    @PostiveOrZero
+    private Double claimAmount;
     private String description;
     private String PENDING;
     private String APPROVED;
     private String REJECTED;
 
-     public Long getId() {
+    public Claim(Long id, LocalDate claimDate, String description, String pENDING, String aPPROVED, String rEJECTED) {
+        this.id = id;
+        this.claimDate = claimDate;
+        this.description = description;
+        PENDING = pENDING;
+        APPROVED = aPPROVED;
+        REJECTED = rEJECTED;
+    }
+
+    public Long getId() {
         return id;
     }
     public void setId(Long id) {
