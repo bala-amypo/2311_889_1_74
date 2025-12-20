@@ -1,9 +1,5 @@
-package com.example.demo.repository;
+public interface FraudCheckResultRepo
+        extends JpaRepository<FraudCheckResult, Long> {
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.example.demo.model.FraqudCheckResult;
-
-public interface FraudCheckResultRepo extends JpaRepository<FraudCheckResult , Long>{
-    
+    Optional<FraudCheckResult> findByClaimId(Long claimId);
 }

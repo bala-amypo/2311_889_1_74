@@ -7,3 +7,7 @@ import com.example.demo.model.Policy;
 public interface PolicyRepo extends JpaRepository<Policy , Long>{
     
 }
+public interface PolicyRepo extends JpaRepository<Policy, Long> {
+
+    Optional<Policy> findByPolicyNumber(String policyNumber);
+}

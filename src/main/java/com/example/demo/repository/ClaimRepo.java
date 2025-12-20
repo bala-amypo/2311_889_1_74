@@ -1,9 +1,4 @@
-package com.example.demo.repository;
+public interface ClaimRepo extends JpaRepository<Claim, Long> {
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.example.demo.model.Claim;
-
-public interface ClaimRepo extends JpaRepository<Claim , Long>{
-
+    Optional<Claim> findById(Long id);
 }
