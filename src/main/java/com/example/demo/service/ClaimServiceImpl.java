@@ -21,8 +21,9 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     @Override
-    public Claim getClaim(Long id) {
-        return claimRepo.findById(id).orElseThrow();
+    public Claim getClaimById(Long id) {
+        return claimRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Claim not found"));
     }
 
     @Override
