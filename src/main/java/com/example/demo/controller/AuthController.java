@@ -1,22 +1,33 @@
-package com.example.demo.controller;
-
-import org.springframework.beans.factory.BeanRegistry.Spec;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    AuthController src;
+
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthController(UserService userService,
+                          JwtUtil jwtUtil,
+                          AuthenticationManager authenticationManager) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
+    }
+
     @PostMapping("/register")
-    public User postdata(@RequestBody User st){
-        return src.savedata(st);
+    public User register(@Valid @RequestBody User user) {
+        return userService.register(user);
     }
 
     @PostMapping("/login")
-        public User postdata(@RequestBody User st){
-            return src.savedata(st);
+    public AuthResponse login(@RequestBody AuthRequest request) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(), request.getPassword())
+        );
+
+        String token = jwtUtil.generateToken(request.getEmail());
+        return new AuthResponse(token);
     }
 }

@@ -1,44 +1,34 @@
-package com.example.demo.model;
+@Entity
+public class Policy {
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-public class Policy{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private 
+
     @Column(unique = true)
+    @NotBlank
     private String policyNumber;
-    private LocalDte startDate;
+
+    @NotBlank
+    private String policyType;
+
+    @NotNull
+    private LocalDate startDate;
+
+    @NotNull
     private LocalDate endDate;
 
-    public Policy(Long id, String policyNumber, LocalDte startDate, LocalDate endDate) {
-        this.id = id;
-        this.policyNumber = policyNumber;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
+    private List<Claim> claims = new ArrayList<>();
+
+    @AssertTrue(message = "invalid date")
+    public boolean isValidDate() {
+        return endDate.isAfter(startDate);
     }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getPolicyNumber() {
-        return policyNumber;
-    }
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
-    }
-    public LocalDte getStartDate() {
-        return startDate;
-    }
-    public void setStartDate(LocalDte startDate) {
-        this.startDate = startDate;
-    }
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+
+    // getters & setters
 }
