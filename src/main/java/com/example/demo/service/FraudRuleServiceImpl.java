@@ -1,19 +1,25 @@
+package com.example.demo.service;
+
+import com.example.demo.model.FraudRule;
+import com.example.demo.repository.FraudRuleRepo;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
-public class FraudRuleServiceImpl implements FraudRuleService {
+public class FraudRuleServiceImpl {
 
-    private final FraudRuleRepo fraudRuleRepo;
+    private final FraudRuleRepo repo;
 
-    public FraudRuleServiceImpl(FraudRuleRepo fraudRuleRepo) {
-        this.fraudRuleRepo = fraudRuleRepo;
+    public FraudRuleServiceImpl(FraudRuleRepo repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public FraudRule addRule(FraudRule rule) {
-        return fraudRuleRepo.save(rule);
+    public FraudRule create(FraudRule rule) {
+        return repo.save(rule);
     }
 
-    @Override
-    public List<FraudRule> getAllRules() {
-        return fraudRuleRepo.findAll();
+    public List<FraudRule> getAll() {
+        return repo.findAll();
     }
 }
