@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class FraudCheckResult {
@@ -10,14 +9,8 @@ public class FraudCheckResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Claim claim;
-
-    private Boolean isFraudulent;
-    private String triggeredRuleName;
-    private String rejectionReason;
-
-    private LocalDateTime checkedAt = LocalDateTime.now();
+    private boolean fraud;
+    private String reason;
 
     // getters & setters
 }

@@ -10,8 +10,7 @@ public class FraudRule {
     private Long id;
 
     private String ruleName;
-    private String conditionField;
-    private String value;
+    private double threshold;
 
     // getters & setters
 }
