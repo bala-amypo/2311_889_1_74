@@ -1,3 +1,9 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -16,10 +22,10 @@ public class User {
     @NotBlank
     private String password;
 
-    private String role = "USER";
+    private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Policy> policies = new ArrayList<>();
+    private List<Policy> policies;
 
     // getters & setters
 }

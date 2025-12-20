@@ -1,3 +1,7 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+
 @Entity
 public class FraudRule {
 
@@ -5,13 +9,9 @@ public class FraudRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String ruleName;
-
     private String conditionField;
-    private String operator;
     private String value;
-    private String severity;
 
     // getters & setters
 }

@@ -1,3 +1,9 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.time.LocalDate;
+
 @Entity
 public class Claim {
 
@@ -12,15 +18,13 @@ public class Claim {
     private LocalDate claimDate;
 
     @Positive
-    private Double claimAmount;
+    private double claimAmount;
 
-    private String description;
+    private String status;
 
-    private String status = "PENDING";
-
-    @AssertTrue(message = "invalid date")
-    public boolean isValidDate() {
-        return !claimDate.isAfter(LocalDate.now());
+    @AssertTrue
+    public boolean isAmountValid() {
+        return claimAmount > 0;
     }
 
     // getters & setters

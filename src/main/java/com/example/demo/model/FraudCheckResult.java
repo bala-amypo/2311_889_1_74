@@ -1,3 +1,8 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class FraudCheckResult {
 
@@ -12,12 +17,7 @@ public class FraudCheckResult {
     private String triggeredRuleName;
     private String rejectionReason;
 
-    private LocalDateTime checkedAt;
-
-    @PrePersist
-    public void onCreate() {
-        checkedAt = LocalDateTime.now();
-    }
+    private LocalDateTime checkedAt = LocalDateTime.now();
 
     // getters & setters
 }

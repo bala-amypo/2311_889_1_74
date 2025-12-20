@@ -1,3 +1,10 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 public class Policy {
 
@@ -23,11 +30,11 @@ public class Policy {
     private User user;
 
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
-    private List<Claim> claims = new ArrayList<>();
+    private List<Claim> claims;
 
-    @AssertTrue(message = "invalid date")
-    public boolean isValidDate() {
-        return endDate.isAfter(startDate);
+    @AssertTrue
+    public boolean isDateValid() {
+        return startDate != null && endDate != null && startDate.isBefore(endDate);
     }
 
     // getters & setters
