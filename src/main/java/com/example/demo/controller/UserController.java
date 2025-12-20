@@ -1,33 +1,44 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Claim;
-import com.example.demo.service.ClaimService;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/claims")
-public class ClaimController {
+@RequestMapping("/users")
+public class UserController {
 
-    private final ClaimService claimService;
+    private final UserService userService;
 
-    public ClaimController(ClaimService claimService) {
-        this.claimService = claimService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
+    // CREATE USER
     @PostMapping
-    public Claim create(@Valid @RequestBody Claim claim) {
-        return claimService.createClaim(claim);
+    public User createUser(@Valid @RequestBody User user) {
+        return userService.createUser(user);
     }
 
+    // GET USER BY ID
     @GetMapping("/{id}")
-    public Claim get(@PathVariable Long id) {
-        return claimService.getClaim(id);
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
+    // GET ALL USERS
     @GetMapping
-    public List<Claim> all() {
-        return claimService.getAllClaims();
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    // DELETE USER
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "User deleted successfully";
     }
 }

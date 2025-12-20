@@ -1,30 +1,38 @@
+package com.example.demo.service;
+
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepo;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepo userRepo,
-                           PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User register(User user) {
-
-        if (userRepo.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("invalid email");
-        }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+    public User createUser(User user) {
         return userRepo.save(user);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepo.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+    public User getUserById(Long id) {
+        return userRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
     }
 }

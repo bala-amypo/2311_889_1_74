@@ -1,35 +1,28 @@
+package com.example.demo.service;
+
+import com.example.demo.model.Claim;
+import com.example.demo.repository.ClaimRepo;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
     private final ClaimRepo claimRepo;
-    private final PolicyRepo policyRepo;
 
-    public ClaimServiceImpl(ClaimRepo claimRepo,
-                            PolicyRepo policyRepo) {
+    public ClaimServiceImpl(ClaimRepo claimRepo) {
         this.claimRepo = claimRepo;
-        this.policyRepo = policyRepo;
     }
 
     @Override
     public Claim createClaim(Claim claim) {
-
-        if (claim.getPolicy() == null ||
-            claim.getPolicy().getId() == null) {
-            throw new IllegalArgumentException("invalid policy");
-        }
-
-        Policy policy = policyRepo.findById(claim.getPolicy().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
-
-        claim.setPolicy(policy);
-        claim.setStatus("PENDING");
         return claimRepo.save(claim);
     }
 
     @Override
-    public Claim getClaim(Long claimId) {
-        return claimRepo.findById(claimId)
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+    public Claim getClaim(Long id) {
+        return claimRepo.findById(id).orElseThrow();
     }
 
     @Override
