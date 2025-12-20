@@ -1,19 +1,6 @@
-package com.example.demo.service;
+public interface PolicyService {
 
-import java.util.HashMap;
-import java.util.Map;
+    Policy createPolicy(Policy policy);
 
-import org.springframework.stereotype.Service;
-
-import com.example.demo.entity.Studententity;
-
-@Service
-public class PolicySerivce {
-    Map<Integer,Policy> mp = new HashMap<>();
-
-       public Policy id(int id) {
-        return mp.get(id);
-    }
-
-
+    List<Policy> getPoliciesByUser(Long userId);
 }
