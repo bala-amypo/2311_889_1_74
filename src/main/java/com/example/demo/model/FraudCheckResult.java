@@ -43,7 +43,6 @@ public class FraudCheckResult {
         this.checkedAt = LocalDateTime.now();
     }
 
-    // getters
 
     public Long getId() {
         return id;
