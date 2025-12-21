@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -43,6 +42,7 @@ public class FraudCheckResult {
         this.checkedAt = LocalDateTime.now();
     }
 
+    // getters
 
     public Long getId() {
         return id;
@@ -66,5 +66,29 @@ public class FraudCheckResult {
 
     public LocalDateTime getCheckedAt() {
         return checkedAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setClaim(Claim claim) {
+        this.claim = claim;
+    }
+
+    public void setIsFraudulent(Boolean isFraudulent) {
+        this.isFraudulent = isFraudulent;
+    }
+
+    public void setTriggeredRuleName(String triggeredRuleName) {
+        this.triggeredRuleName = triggeredRuleName;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
+    }
+
+    public void setCheckedAt(LocalDateTime checkedAt) {
+        this.checkedAt = checkedAt;
     }
 }

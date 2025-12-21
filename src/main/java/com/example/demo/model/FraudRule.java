@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import java.util.Set;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -61,5 +60,37 @@ public class FraudRule {
 
     public String getSeverity() {
         return severity;
+    }
+
+    public Set<Claim> getClaims() {
+        return claims;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+    }
+
+    public void setConditionField(String conditionField) {
+        this.conditionField = conditionField;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setSeverity(String severity) {
+        this.severity = severity;
+    }
+
+    public void setClaims(Set<Claim> claims) {
+        this.claims = claims;
     }
 }
