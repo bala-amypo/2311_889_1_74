@@ -1,30 +1,38 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Claim;
-import com.example.demo.service.ClaimService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.dto.ClaimDto;
+import com.example.demo.model.Claim;
+import com.example.demo.service.ClaimService;
+
 @RestController
-@RequestMapping("/claims")
+@RequestMapping("/api/claims")
 public class ClaimController {
 
-    private final ClaimService claimService;
+    @Autowired
+    private ClaimService claimService;
 
-    public ClaimController(ClaimService claimService) {
-        this.claimService = claimService;
-    }
+    @PostMapping("/{policyId}")
+    public Claim createClaim(@PathVariable Long policyId,
+                             @RequestBody ClaimDto dto) {
 
-    @PostMapping
-    public Claim createClaim(@Valid @RequestBody Claim claim) {
-        return claimService.createClaim(claim);
+        Claim claim = new Claim(
+                null,
+                dto.getClaimDate(),
+                dto.getClaimAmount(),
+                dto.getDescription()
+        );
+
+        return claimService.createClaim(policyId, claim);
     }
 
     @GetMapping("/{id}")
-    public Claim getClaim(@PathVariable Long id) {
-        return claimService.getClaimById(id);
+    public Claim getClaimById(@PathVariable Long id) {
+        return claimService.getClaim(id);
     }
 
     @GetMapping
