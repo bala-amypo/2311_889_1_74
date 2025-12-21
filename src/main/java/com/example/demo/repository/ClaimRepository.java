@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Claim;
 
-public interface ClaimRepo extends JpaRepository<Claim, Long> {
+public interface ClaimRepository extends JpaRepository<Claim, Long> {
 }

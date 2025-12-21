@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.FraudRule;
 
-public interface FraudRuleRepo extends JpaRepository<FraudRule, Long> {
+public interface FraudRuleRepository extends JpaRepository<FraudRule, Long> {
 
     boolean existsByRuleName(String ruleName);
 }
