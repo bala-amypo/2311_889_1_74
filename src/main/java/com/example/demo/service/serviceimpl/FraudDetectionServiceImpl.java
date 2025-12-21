@@ -31,16 +31,15 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
 
     @Override
     public FraudCheckResult evaluateClaim(Long claimId) {
-
+        // Fetch claim by ID or throw exception if not found
         Claim claim = claimRepository.findById(claimId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Claim not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Claim not found with id: " + claimId));
 
         List<FraudRule> rules = fraudRuleRepository.findAll();
 
         for (FraudRule rule : rules) {
-            if (rule.getConditionField().equals("claimAmount")) {
-
+            // Example: checking only claimAmount field
+            if ("claimAmount".equals(rule.getConditionField())) {
                 double threshold = Double.parseDouble(rule.getValue());
 
                 if (claim.getClaimAmount() > threshold) {
@@ -56,6 +55,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
             }
         }
 
+        // If no rules matched
         FraudCheckResult result = new FraudCheckResult(
                 claim,
                 false,
@@ -69,8 +69,13 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
 
     @Override
     public FraudCheckResult getResultByClaim(Long claimId) {
-        return resultRepository.findByClaimId(claimId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Result not found"));
+        List<FraudCheckResult> results = resultRepository.findByClaimId(claimId);
+
+        if (results.isEmpty()) {
+            throw new ResourceNotFoundException("No fraud check result found for claim id: " + claimId);
+        }
+
+        // Return the first result (you can modify if multiple results exist)
+        return results.get(0);
     }
 }
