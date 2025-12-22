@@ -67,5 +67,4 @@ public ResponseEntity<AuthResponse> login(
 
     return ResponseEntity.ok(response);
 }
-
 }
