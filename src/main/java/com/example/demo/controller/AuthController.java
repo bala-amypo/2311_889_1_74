@@ -29,7 +29,6 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    // POST /auth/register
     @PostMapping("/register")
     public ResponseEntity<User> register(
             @Valid @RequestBody AuthRequest request) {
