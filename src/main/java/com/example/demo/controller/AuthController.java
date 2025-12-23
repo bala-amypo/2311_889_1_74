@@ -63,7 +63,6 @@ public ResponseEntity<AuthResponse> login(
             user.getEmail(),
             user.getRole()
     );
-
     return ResponseEntity.ok(response);
 }
 }
