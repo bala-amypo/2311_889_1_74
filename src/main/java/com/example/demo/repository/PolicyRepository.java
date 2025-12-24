@@ -1,11 +1,14 @@
 package com.example.demo.repository;
 
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Policy;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
 
+@Repository
 public interface PolicyRepository extends JpaRepository<Policy, Long> {
-
-    boolean existsByPolicyNumber(String policyNumber); // ✅ ADD
-    List<Policy> findByUserId(Long userId);             // ✅ ADD
+    Optional<Policy> findByPolicyNumber(String policyNumber);
+    boolean existsByPolicyNumber(String policyNumber);
+    List<Policy> findByUserId(Long userId);
 }
