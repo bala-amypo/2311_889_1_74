@@ -1,25 +1,38 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.dto.FraudCheckResultDto;
 import com.example.demo.model.FraudCheckResult;
 import com.example.demo.service.FraudDetectionService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/fraud-check")
 public class FraudDetectionController {
-
-    @Autowired
-    private FraudDetectionService fraudDetectionService;
-
-    @PostMapping("/evaluate/{claimId}")
-    public FraudCheckResult evaluateClaim(@PathVariable Long claimId) {
-        return fraudDetectionService.evaluateClaim(claimId);
+    
+    private final FraudDetectionService fraudDetectionService;
+    
+    public FraudDetectionController(FraudDetectionService fraudDetectionService) {
+        this.fraudDetectionService = fraudDetectionService;
     }
-
+    
+    @PostMapping("/evaluate/{claimId}")
+    public ResponseEntity<FraudCheckResult> evaluateClaim(@PathVariable Long claimId) {
+        FraudCheckResult result = fraudDetectionService.evaluateClaim(claimId);
+        return ResponseEntity.ok(result);
+    }
+    
     @GetMapping("/result/claim/{claimId}")
-    public FraudCheckResult getResultByClaim(@PathVariable Long claimId) {
-        return fraudDetectionService.getResultByClaim(claimId);
+    public ResponseEntity<FraudCheckResultDto> getResultByClaim(@PathVariable Long claimId) {
+        FraudCheckResult result = fraudDetectionService.getResultByClaim(claimId);
+        
+        FraudCheckResultDto dto = new FraudCheckResultDto();
+        dto.setClaimId(result.getClaim().getId());
+        dto.setIsFraudulent(result.getIsFraudulent());
+        dto.setTriggeredRuleName(result.getTriggeredRuleName());
+        dto.setRejectionReason(result.getRejectionReason());
+        dto.setCheckedAt(result.getCheckedAt());
+        
+        return ResponseEntity.ok(dto);
     }
 }
