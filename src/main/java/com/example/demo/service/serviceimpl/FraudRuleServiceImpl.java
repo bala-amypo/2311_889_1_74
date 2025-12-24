@@ -1,4 +1,4 @@
-package com.example.demo.service.serviceimpl;
+package com.example.demo.service.impl;
 
 import java.util.List;
 
@@ -9,19 +9,19 @@ import com.example.demo.model.FraudRule;
 import com.example.demo.repository.FraudRuleRepository;
 import com.example.demo.service.FraudRuleService;
 
-@Service   // 🔴 REQUIRED
+@Service
 public class FraudRuleServiceImpl implements FraudRuleService {
 
     @Autowired
-    private FraudRuleRepository fraudRuleRepository;
+    private FraudRuleRepository repository;
 
     @Override
     public FraudRule addRule(FraudRule rule) {
-        return fraudRuleRepository.save(rule); // 🔴 REQUIRED
+        return repository.save(rule);
     }
 
     @Override
     public List<FraudRule> getAllRules() {
-        return fraudRuleRepository.findAll();
+        return repository.findAll();
     }
 }
