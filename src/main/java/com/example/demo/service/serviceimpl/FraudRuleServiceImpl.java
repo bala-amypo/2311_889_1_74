@@ -1,27 +1,27 @@
-package com.example.demo.service.impl;
+package com.example.demo.service.serviceimpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.model.FraudRule;
 import com.example.demo.repository.FraudRuleRepository;
 import com.example.demo.service.FraudRuleService;
 
+import java.util.List;
+
 @Service
 public class FraudRuleServiceImpl implements FraudRuleService {
 
     @Autowired
-    private FraudRuleRepository repository;
+    private FraudRuleRepository fraudRuleRepository;
 
     @Override
     public FraudRule addRule(FraudRule rule) {
-        return repository.save(rule);
+        return fraudRuleRepository.save(rule);
     }
 
     @Override
     public List<FraudRule> getAllRules() {
-        return repository.findAll();
+        return fraudRuleRepository.findAll();
     }
 }
