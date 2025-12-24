@@ -1,37 +1,40 @@
-package com.example.demo.controller;
+@Entity
+public class FraudRule {
 
-import java.util.List;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+    @NotBlank
+    private String ruleName;
 
-import com.example.demo.dto.FraudRuleDto;
-import com.example.demo.model.FraudRule;
-import com.example.demo.service.FraudRuleService;
+    @NotBlank
+    private String conditionField;
 
-@RestController
-@RequestMapping("/api/rules")
-public class FraudRuleController {
+    @NotBlank
+    private String operator;
 
-    @Autowired
-    private FraudRuleService fraudRuleService;
+    @NotBlank
+    private String value;
 
-    @PostMapping
-    public FraudRule addRule(@RequestBody FraudRuleDto dto) {
+    @NotBlank
+    private String severity;
 
-        FraudRule rule = new FraudRule(
-                dto.getRuleName(),
-                dto.getConditionField(),
-                dto.getOperator(),
-                dto.getValue(),
-                dto.getSeverity()
-        );
+    // ✅ REQUIRED by JPA
+    public FraudRule() {}
 
-        return fraudRuleService.addRule(rule);
+    // ✅ Used by controller
+    public FraudRule(String ruleName,
+                     String conditionField,
+                     String operator,
+                     String value,
+                     String severity) {
+        this.ruleName = ruleName;
+        this.conditionField = conditionField;
+        this.operator = operator;
+        this.value = value;
+        this.severity = severity;
     }
 
-    @GetMapping
-    public List<FraudRule> getAllRules() {
-        return fraudRuleService.getAllRules();
-    }
+    // getters & setters
 }
