@@ -2,13 +2,12 @@ package com.example.demo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,19 +27,6 @@ public class GlobalExceptionHandler {
         error.put("timestamp", LocalDateTime.now());
         error.put("message", ex.getMessage());
         error.put("details", "Invalid input");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-    
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("timestamp", LocalDateTime.now());
-        error.put("message", "Validation failed");
-        error.put("details", ex.getBindingResult().getFieldErrors().stream()
-                .collect(Collectors.toMap(
-                    fieldError -> fieldError.getField(),
-                    fieldError -> fieldError.getDefaultMessage()
-                )));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
     

@@ -12,7 +12,7 @@ public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "policy_id")
     private Policy policy;
     
@@ -22,9 +22,9 @@ public class Claim {
     
     private String description;
     
-    private String status;
+    private String status = "PENDING";
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "claim_fraud_rules",
         joinColumns = @JoinColumn(name = "claim_id"),
@@ -32,7 +32,7 @@ public class Claim {
     )
     private Set<FraudRule> suspectedRules = new HashSet<>();
     
-    @OneToOne(mappedBy = "claim", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "claim", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private FraudCheckResult fraudCheckResult;
     
     public Claim() {}
@@ -44,6 +44,7 @@ public class Claim {
         this.description = description;
     }
     
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     

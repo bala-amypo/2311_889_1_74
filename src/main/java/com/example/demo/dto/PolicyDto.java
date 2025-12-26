@@ -11,6 +11,7 @@ public class PolicyDto {
     private LocalDate endDate;
     
     public PolicyDto() {}
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     
