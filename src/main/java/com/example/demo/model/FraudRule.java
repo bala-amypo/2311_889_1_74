@@ -18,7 +18,6 @@ public class FraudRule {
     
     private String operator;
     
-    @Column(name = "rule_value")
     private String value;
     
     private String severity;
@@ -36,6 +35,7 @@ public class FraudRule {
         this.severity = severity;
     }
     
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     

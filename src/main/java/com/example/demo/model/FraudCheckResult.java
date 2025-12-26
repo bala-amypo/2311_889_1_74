@@ -10,7 +10,7 @@ public class FraudCheckResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "claim_id")
     private Claim claim;
     
@@ -41,6 +41,7 @@ public class FraudCheckResult {
         }
     }
     
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     
