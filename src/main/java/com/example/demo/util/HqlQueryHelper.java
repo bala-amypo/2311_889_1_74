@@ -1,41 +1,41 @@
 package com.example.demo.util;
 
 import com.example.demo.model.Claim;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Component
 public class HqlQueryHelper {
     
-    public String buildClaimQuery(String status) {
-        StringBuilder query = new StringBuilder("SELECT c FROM Claim c");
-        if (status != null && !status.isEmpty()) {
-            query.append(" WHERE c.status = :status");
-        }
-        return query.toString();
-    }
-    
-    public String buildPolicyQuery(String policyType) {
-        StringBuilder query = new StringBuilder("SELECT p FROM Policy p");
-        if (policyType != null && !policyType.isEmpty()) {
-            query.append(" WHERE p.policyType = :policyType");
-        }
-        return query.toString();
-    }
-    
-    public String buildFraudRuleQuery(String severity) {
-        StringBuilder query = new StringBuilder("SELECT fr FROM FraudRule fr");
-        if (severity != null && !severity.isEmpty()) {
-            query.append(" WHERE fr.severity = :severity");
-        }
-        return query.toString();
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
     
     public List<Claim> findHighValueClaims(Double minAmount) {
-        return List.of();
+        String hql = "SELECT c FROM Claim c WHERE c.claimAmount > :minAmount";
+        TypedQuery<Claim> query = entityManager.createQuery(hql, Claim.class);
+        query.setParameter("minAmount", minAmount);
+        return query.getResultList();
     }
     
     public List<Claim> findClaimsByDescriptionKeyword(String keyword) {
-        return List.of();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Claim> cq = cb.createQuery(Claim.class);
+        Root<Claim> claim = cq.from(Claim.class);
+        
+        if (keyword != null && !keyword.isEmpty()) {
+            Predicate predicate = cb.like(cb.lower(claim.get("description")), 
+                                        "%" + keyword.toLowerCase() + "%");
+            cq.where(predicate);
+        }
+        
+        return entityManager.createQuery(cq).getResultList();
     }
 }
