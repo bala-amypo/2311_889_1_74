@@ -9,6 +9,7 @@ import com.example.demo.repository.FraudCheckResultRepository;
 import com.example.demo.repository.FraudRuleRepository;
 import com.example.demo.service.FraudDetectionService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                 FraudCheckResult result = new FraudCheckResult(
                     claim, 
                     true, 
-                    rule.getRuleName(),
-                    "Claim flagged due to rule: " + rule.getRuleName(),
+                    rule.getRuleName(), 
+                    "Claim flagged by rule: " + rule.getRuleName(),
                     LocalDateTime.now()
                 );
                 return resultRepository.save(result);
@@ -50,7 +51,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
         FraudCheckResult result = new FraudCheckResult(
             claim, 
             false, 
-            null,
+            null, 
             "No fraud detected",
             LocalDateTime.now()
         );
@@ -59,20 +60,16 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
     
     private boolean evaluateRule(Claim claim, FraudRule rule) {
         if ("claimAmount".equals(rule.getConditionField())) {
-            try {
-                double ruleValue = Double.parseDouble(rule.getValue());
-                double claimAmount = claim.getClaimAmount();
-                
-                switch (rule.getOperator()) {
-                    case ">": return claimAmount > ruleValue;
-                    case "<": return claimAmount < ruleValue;
-                    case ">=": return claimAmount >= ruleValue;
-                    case "<=": return claimAmount <= ruleValue;
-                    case "=": return claimAmount == ruleValue;
-                    default: return false;
-                }
-            } catch (NumberFormatException e) {
-                return false;
+            double threshold = Double.parseDouble(rule.getValue());
+            double claimAmount = claim.getClaimAmount();
+            
+            switch (rule.getOperator()) {
+                case ">": return claimAmount > threshold;
+                case "<": return claimAmount < threshold;
+                case ">=": return claimAmount >= threshold;
+                case "<=": return claimAmount <= threshold;
+                case "=": return claimAmount == threshold;
+                default: return false;
             }
         }
         return false;

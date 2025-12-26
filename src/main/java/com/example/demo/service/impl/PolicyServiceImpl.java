@@ -7,6 +7,7 @@ import com.example.demo.repository.PolicyRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.PolicyService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -26,12 +27,12 @@ public class PolicyServiceImpl implements PolicyService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         
         if (policyRepository.existsByPolicyNumber(policy.getPolicyNumber())) {
-            throw new IllegalArgumentException("Invalid policy number - policy number already exists");
+            throw new IllegalArgumentException("Policy number already exists");
         }
         
         if (policy.getEndDate().isBefore(policy.getStartDate()) || 
             policy.getEndDate().isEqual(policy.getStartDate())) {
-            throw new IllegalArgumentException("Invalid dates - end date must be after start date");
+            throw new IllegalArgumentException("Invalid dates");
         }
         
         policy.setUser(user);
